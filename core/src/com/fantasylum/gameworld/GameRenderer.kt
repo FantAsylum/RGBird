@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 
-class GameRenderer {
+class GameRenderer(world : GameWorld) {
 
     val cam = OrthographicCamera()
     val shapeRenderer = ShapeRenderer()
 
-    constructor(world : GameWorld) {
+    init {
         shapeRenderer.projectionMatrix = cam.combined
     }
 
