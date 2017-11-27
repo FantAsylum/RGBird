@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen
 import com.fantasylum.gameworld.GameRenderer
 import com.fantasylum.gameworld.GameWorld
 import com.badlogic.gdx.Gdx
-
+import com.fantasylum.utils.InputHandler
 
 
 class GameScreen : Screen {
@@ -16,6 +16,10 @@ class GameScreen : Screen {
 
     private val world = GameWorld(gameHeight / 2)
     private val renderer = GameRenderer(world)
+
+    init {
+        Gdx.input.inputProcessor = InputHandler(world.bird)
+    }
 
     override fun show() {
 
