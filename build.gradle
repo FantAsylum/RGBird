@@ -95,3 +95,12 @@ project(":core") {
 tasks.eclipse.doLast {
     delete ".project"
 }
+
+task packTextures {
+    doLast {
+        new File("android/assets/graphics").eachDir() { dir ->
+            def path = dir.getPath()
+            TexturePacker.process(path, path, "atlas")
+        }
+    }
+}
