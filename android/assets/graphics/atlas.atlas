@@ -1,0 +1,27 @@
+
+atlas.png
+size: 64,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bird_blue
+  rotate: false
+  xy: 2, 2
+  size: 17, 12
+  orig: 17, 12
+  offset: 0, 0
+  index: -1
+bird_green
+  rotate: false
+  xy: 21, 2
+  size: 17, 12
+  orig: 17, 12
+  offset: 0, 0
+  index: -1
+bird_red
+  rotate: false
+  xy: 40, 2
+  size: 17, 12
+  orig: 17, 12
+  offset: 0, 0
+  index: -1

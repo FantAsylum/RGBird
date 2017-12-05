@@ -1,3 +1,5 @@
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
 buildscript {
     ext.kotlinVersion = '1.1.51'
 
@@ -11,6 +13,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
+        classpath 'com.badlogicgames.gdx:gdx-tools:1.5.4'
 
     }
 }
@@ -85,6 +88,9 @@ project(":ios") {
 project(":core") {
     apply plugin: "kotlin"
 
+    /*classes {
+        dependsOn ':packTextures'
+    }*/
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -98,6 +104,8 @@ tasks.eclipse.doLast {
 
 task packTextures {
     doLast {
-        TexturePacker.process("android/assets/graphics", "android/assets/graphics", "atlas")
+        def texturesPath = new File("android/assets/graphics").getPath()
+
+        TexturePacker.process(texturesPath, texturesPath, "atlas")
     }
 }
