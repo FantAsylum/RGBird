@@ -15,7 +15,7 @@ class GameScreen : Screen {
     private val gameHeight = screenHeight / (screenWidth / gameWidth)
 
     private val world = GameWorld(gameHeight / 2)
-    private val renderer = GameRenderer(world)
+    private val renderer = GameRenderer(world, gameHeight)
 
     init {
         Gdx.input.inputProcessor = InputHandler(world.bird)

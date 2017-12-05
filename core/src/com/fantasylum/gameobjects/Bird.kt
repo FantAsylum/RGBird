@@ -3,10 +3,10 @@ package com.fantasylum.gameobjects
 import com.badlogic.gdx.math.Vector2
 
 class Bird(
-        private val x: Float,
-        private val y: Float,
-        private val width: Float,
-        private val height: Float) {
+        val x: Float,
+        val y: Float,
+        val width: Float,
+        val height: Float) {
 
     private var position = Vector2(x,y)
     private var velocity = Vector2(0f,0f)
