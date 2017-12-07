@@ -11,6 +11,10 @@ class TexturesLoader {
 
     private object Holder { val INSTANCE = TexturesLoader() }
 
+    init {
+        birdRedTexture.flip(false,true)
+    }
+
     companion object {
         val instance: TexturesLoader by lazy { Holder.INSTANCE }
     }
