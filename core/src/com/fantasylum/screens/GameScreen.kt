@@ -16,6 +16,7 @@ class GameScreen : Screen {
 
     private val world = GameWorld(gameHeight / 2)
     private val renderer = GameRenderer(world, gameHeight)
+    private var runTime: Float = 0.toFloat()
 
     init {
         Gdx.input.inputProcessor = InputHandler(world.bird)
@@ -26,8 +27,9 @@ class GameScreen : Screen {
     }
 
     override fun render(delta : Float) {
+        runTime += delta
         world.update(delta)
-        renderer.render()
+        renderer.render(runTime)
     }
 
     override fun resize(width : Int, height : Int) {

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.fantasylum.utils.TexturesLoader
 
 class GameRenderer(private val world : GameWorld,
                    private val gameHeight : Float) {
@@ -20,7 +19,7 @@ class GameRenderer(private val world : GameWorld,
         batcher.projectionMatrix = cam.combined
     }
 
-    fun render() {
+    fun render(runTime : Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
@@ -38,8 +37,8 @@ class GameRenderer(private val world : GameWorld,
         shapeRenderer.end()
 
         batcher.begin()
-
-        batcher.draw(world.bird.textures.peek(), world.bird.position.x, world.bird.position.y, world.bird.width, world.bird.height)
+        batcher.draw(world.bird.animations.peek()!!.getKeyFrame(runTime), world.bird.position.x, world.bird.position.y, world.bird.width / 2f,
+                world.bird.height / 2f, world.bird.width, world.bird.height, 1f, 1f, world.bird.rotation )
 
         batcher.end()
     }
