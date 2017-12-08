@@ -39,7 +39,7 @@ class GameRenderer(private val world : GameWorld,
 
         batcher.begin()
 
-        batcher.draw(TexturesLoader.instance.birdRedTexture, world.bird.position.x, world.bird.position.y, world.bird.width, world.bird.height)
+        batcher.draw(world.bird.textures.peek(), world.bird.position.x, world.bird.position.y, world.bird.width, world.bird.height)
 
         batcher.end()
     }
