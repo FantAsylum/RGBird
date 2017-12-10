@@ -20,6 +20,8 @@ class TexturesLoader {
     val birdBlueMidTexture : TextureRegion = textureAtlas.findRegion("bird_blue_mid")
     val birdBlueHighTexture : TextureRegion = textureAtlas.findRegion("bird_blue_high")
 
+
+
     private object Holder { val INSTANCE = TexturesLoader() }
 
     init {

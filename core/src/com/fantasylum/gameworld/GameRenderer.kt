@@ -12,6 +12,8 @@ class GameRenderer(private val world : GameWorld,
     private val cam = OrthographicCamera()
     private val shapeRenderer = ShapeRenderer()
     private val batcher = SpriteBatch()
+    private val frontGrass = world.scroller.frontGrass
+    private val backGrass = world.scroller.backGrass
 
     init {
         cam.setToOrtho(true, 136f, gameHeight)

@@ -2,6 +2,7 @@ package com.fantasylum.gameobjects
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.Circle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.fantasylum.utils.MyStack
@@ -13,15 +14,14 @@ class Bird(
         val width: Float,
         val height: Float) {
 
+    var rotation: Float = 0.toFloat()
+    val animations = MyStack<Animation<TextureRegion>>()
+    var collider = Circle()
 
     private var velocity = Vector2(0f,0f)
     private var acceleration = Vector2(0f,460f)
-    var rotation: Float = 0.toFloat()
-
     private val maxVelocity = 200f
     private val velocityOnClick = -140f
-    val animations = MyStack<Animation<TextureRegion>>()
-
     private val redBirdTextures = Array<TextureRegion>()
     private var greenBirdTextures = Array<TextureRegion>()
     private var blueBirdTextures = Array<TextureRegion>()
@@ -70,6 +70,7 @@ class Bird(
             velocity.y = maxVelocity
         }
         position.add(velocity.cpy().scl(delta))
+        collider.set(position.x + 9, position.y + 6, 6.5f)
         if (velocity.y < 0) {
             rotation -= 600 * delta
 
