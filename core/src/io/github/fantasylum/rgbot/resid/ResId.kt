@@ -1,3 +1,3 @@
 package io.github.fantasylum.rgbot.resid
 
-val UI_SKIN = "skins/neon_ui"
+val UI_SKIN = "skins/neon-ui.json"
