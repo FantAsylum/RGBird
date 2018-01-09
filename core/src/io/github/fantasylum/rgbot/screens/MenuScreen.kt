@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 
 import io.github.fantasylum.rgbot.resid.*
 import io.github.fantasylum.rgbot.RGBot
+import io.github.fantasylum.rgbot.util.setOnClickListener
 
 class MenuScreen : ScreenAdapter() {
     private val skin          = RGBot.getSkin(UI_SKIN);
@@ -27,6 +28,8 @@ class MenuScreen : ScreenAdapter() {
         table.add(exitButton).fillX().padBottom(50f).row();
         table.add()
         stage.addActor(table)
+
+        exitButton.setOnClickListener { Gdx.app.exit() }
     }
 
     override fun show() {
