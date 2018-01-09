@@ -30,9 +30,6 @@ class MenuScreen : ScreenAdapter() {
         stage.addActor(table)
 
         exitButton.setOnClickListener { Gdx.app.exit() }
-    }
-
-    override fun show() {
         Gdx.input.inputProcessor = stage
     }
 

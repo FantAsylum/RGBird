@@ -22,9 +22,6 @@ fun <T> Array<T>.filter(predicate: (T) -> Boolean): Array<T> {
 }
 
 fun Button.setOnClickListener(callback: () -> Unit) {
-    // remove all clicklisteners
-    listeners.filter { it !is ClickListener }
-
     addListener(object : ClickListener() {
         override fun clicked(event: InputEvent, x: Float, y: Float) {
             callback()
