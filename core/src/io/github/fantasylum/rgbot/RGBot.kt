@@ -5,15 +5,28 @@ import java.util.LinkedList
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 
+import io.github.fantasylum.rgbot.resid.ATLAS
 import io.github.fantasylum.rgbot.screens.MenuScreen
 
 object RGBot : ApplicationAdapter() {
+    private val ANIMATION_FRAME_DURATION = 1f
+
     private val screenStack = LinkedList<Screen>()
-    private val assetManager = AssetManager()
+    private val assetManager by lazy { AssetManager() }
+    private val atlas by lazy {
+        with (assetManager) {
+            load(ATLAS, TextureAtlas::class.java)
+            finishLoading()
+            get<TextureAtlas>(ATLAS)
+        }
+
+    }
 
     override fun create() {
         pushScreen(MenuScreen())
@@ -49,4 +62,7 @@ object RGBot : ApplicationAdapter() {
         assetManager.finishLoading()
         return assetManager.get(id)
     }
+
+    fun getAnimation(id: String) = Animation(ANIMATION_FRAME_DURATION, atlas.findRegions(id))
+
 }
