@@ -15,7 +15,7 @@ import io.github.fantasylum.rgbot.resid.ATLAS
 import io.github.fantasylum.rgbot.screens.MenuScreen
 
 object RGBot : ApplicationAdapter() {
-    private val ANIMATION_FRAME_DURATION = 1f
+    private val ANIMATION_FRAME_DURATION = 0.1f
 
     private val screenStack = LinkedList<Screen>()
     private val assetManager by lazy { AssetManager() }
