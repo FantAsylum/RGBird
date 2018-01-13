@@ -88,9 +88,9 @@ project(":ios") {
 project(":core") {
     apply plugin: "kotlin"
 
-    /*classes {
+    classes {
         dependsOn ':packTextures'
-    }*/
+    }
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
