@@ -7,8 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 
-import io.github.fantasylum.rgbot.resid.*
 import io.github.fantasylum.rgbot.RGBot
+import io.github.fantasylum.rgbot.resid.*
+import io.github.fantasylum.rgbot.screens.GameScreen
 import io.github.fantasylum.rgbot.util.setOnClickListener
 
 class MenuScreen : ScreenAdapter() {
@@ -29,6 +30,7 @@ class MenuScreen : ScreenAdapter() {
         table.add()
         stage.addActor(table)
 
+        newGameButton.setOnClickListener { RGBot.pushScreen(GameScreen()) }
         exitButton.setOnClickListener { Gdx.app.exit() }
         Gdx.input.inputProcessor = stage
     }
