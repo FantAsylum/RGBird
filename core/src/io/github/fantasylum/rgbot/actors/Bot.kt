@@ -7,7 +7,7 @@ import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.actors.Bot.BotColor.*
 import io.github.fantasylum.rgbot.resid.*
 
-class Bot: Actor() {
+class Bot(var velocity: Float): Actor() {
     private val textures = mapOf(RED   to RGBot.getAnimation(Animations.BOT_RED),
                                  GREEN to RGBot.getAnimation(Animations.BOT_GREEN),
                                  BLUE  to RGBot.getAnimation(Animations.BOT_BLUE))
@@ -28,6 +28,7 @@ class Bot: Actor() {
 
     override fun act(delta: Float) {
         timeAlive += delta
+        x += velocity * delta
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
