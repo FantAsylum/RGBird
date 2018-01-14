@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
 
 import io.github.fantasylum.rgbot.RGBot
-import io.github.fantasylum.rgbot.actors.Bot.BotColor.*
+import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
 
-class Bot(var velocity: Float): Actor() {
+class Bot(var velocity: Float): Actor(), Collider {
     private val textures = mapOf(RED   to RGBot.getAnimation(Animations.BOT_RED),
                                  GREEN to RGBot.getAnimation(Animations.BOT_GREEN),
                                  BLUE  to RGBot.getAnimation(Animations.BOT_BLUE))
@@ -36,14 +36,12 @@ class Bot(var velocity: Float): Actor() {
         batch.draw(texture, x, y)
     }
 
-    private enum class BotColor {
-        RED, GREEN, BLUE;
-
-        fun next() = when (this) {
-                         RED   -> GREEN
-                         GREEN -> BLUE
-                         BLUE  -> RED
-                     }
-    }
-
+    override val topBound: Float
+        get() = top
+    override val bottomBound: Float
+        get() = y
+    override val leftBound: Float
+        get() = x
+    override val rightBound: Float
+        get() = right
 }

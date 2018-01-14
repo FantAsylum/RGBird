@@ -2,12 +2,22 @@ package io.github.fantasylum.rgbot.actors
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 
-infix fun Actor.collidesWith(other: Actor): Boolean {
-    fun Actor.withinBounds(x: Float, y: Float) =
-            this.x < x
-         && this.x + width > x
-         && this.y < y
-         && this.y + height > y
+interface Collider {
+    val topBound:    Float
+    val bottomBound: Float
+    val rightBound:  Float
+    val leftBound:   Float
+    
+    infix fun collidesWith(other: Collider): Boolean {
+        fun Collider.withinBounds(x: Float, y: Float) =
+            x > leftBound
+         && x < rightBound
+         && y < topBound
+         && y > bottomBound
 
-    return other.withinBounds(x, y) || other.withinBounds(x + width, y + height)
+        return other.withinBounds(leftBound, topBound)
+            || other.withinBounds(rightBound, bottomBound)
+    }
+
 }
+
