@@ -104,7 +104,7 @@ tasks.eclipse.doLast {
 
 task packTextures {
     doLast {
-        def texturesPath = new File("android/assets/graphics").getPath()
+        def texturesPath = new File(projectDir.toString() + "/android/assets/graphics").getPath()
 
         TexturePacker.process(texturesPath, texturesPath, "atlas")
     }
