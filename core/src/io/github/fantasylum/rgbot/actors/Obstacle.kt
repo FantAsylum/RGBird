@@ -23,6 +23,8 @@ class Obstacle(private val parts: List<Part>): Actor() {
     init {
         assert(parts.distinctBy { it.color }.size == 3)
         assert(MathUtils.isZero(parts.fold(0f, { acc, part -> acc + part.proportion }) - 1f))
+        height = HEIGHT
+        width = WIDTH
     }
 
     private val textures = mapOf(
@@ -40,14 +42,14 @@ class Obstacle(private val parts: List<Part>): Actor() {
         var startY = y
 
         fun Part.drawPart() {
-            val height = HEIGHT * proportion
+            val partHeight = height * proportion
             batch.draw(
                     textures[color]!!.getKeyFrame(timeAlive, true),
                     x,
                     startY,
-                    WIDTH,
-                    height)
-            startY -= height
+                    width,
+                    partHeight)
+            startY -= partHeight
         }
 
         parts.forEach { it.drawPart() }

@@ -16,14 +16,12 @@ class Bot(var velocity: Float): Actor() {
 
     init {
         val texture = textures[color]!!.getKeyFrame(0f)
-        val width   = texture.regionWidth
-        val height  = texture.regionHeight
+        width   = WIDTH
+        height  = HEIGHT
 
         assert(textures.values
                        .flatMap { it.keyFrames.asIterable() }
-                       .all { it.regionWidth == width && it.regionHeight == height } )
-
-        setBounds(x, y, width.toFloat(), height.toFloat())
+                       .all { it.regionWidth == width.toInt() && it.regionHeight == height.toInt() } )
     }
 
     override fun act(delta: Float) {
@@ -33,6 +31,11 @@ class Bot(var velocity: Float): Actor() {
 
     override fun draw(batch: Batch, parentAlpha: Float) {
         val texture = textures[color]!!.getKeyFrame(timeAlive, true)
-        batch.draw(texture, x, y)
+        batch.draw(texture, x, y, width, height)
+    }
+
+    companion object {
+        val WIDTH = 30f
+        val HEIGHT = 30f
     }
 }
