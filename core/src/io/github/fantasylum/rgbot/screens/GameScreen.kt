@@ -25,7 +25,7 @@ class GameScreen: ScreenAdapter() {
         bot.y = mainStage.height / 2f
 
         obstacle.x = mainStage.width / 1.5f
-        obstacle.y = mainStage.height / 1.5f
+        obstacle.y = 60f
         Gdx.input.inputProcessor = mainStage
     }
 

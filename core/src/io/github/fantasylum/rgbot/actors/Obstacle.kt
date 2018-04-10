@@ -9,6 +9,7 @@ import io.github.fantasylum.rgbot.resid.Animations
 import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_BLUE
 import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_GREEN
 import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_RED
+import io.github.fantasylum.rgbot.util.collides
 
 /**
  * Represents obstacle containing three (red, greed, blue) part
@@ -49,7 +50,7 @@ class Obstacle(private val parts: List<Part>): Actor() {
                     startY,
                     width,
                     partHeight)
-            startY -= partHeight
+            startY += partHeight
         }
 
         parts.forEach { it.drawPart() }
