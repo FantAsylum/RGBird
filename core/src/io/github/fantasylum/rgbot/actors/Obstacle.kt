@@ -35,11 +35,16 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
     private var timeAlive = 0f
 
+    private var active = true
+
     override fun act(delta: Float) {
         timeAlive += delta
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
+        if (! active)
+            return
+
         var startY = y
 
         fun Part.drawPart() {
@@ -55,6 +60,32 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
         parts.forEach { it.drawPart() }
 
+    }
+
+
+    fun checkCollision(bot: Bot) {
+        if (! active)
+            return
+
+        if (this collides bot) {
+            var startY = y
+
+            fun Part.checkPart() {
+                val partY = startY
+                val partTop = partY + height * proportion
+                if (bot.y < partTop && bot.top > partY) {
+                    if (bot.color == color) {
+                        bot.changeColor()
+                        active = false
+                    } else {
+                        bot.destroy()
+                    }
+                }
+                startY = partTop
+            }
+
+            parts.forEach { it.checkPart() }
+        }
     }
 
     data class Part(val color: Color, val proportion: Float)

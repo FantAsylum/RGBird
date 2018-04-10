@@ -1,21 +1,25 @@
 package io.github.fantasylum.rgbot.actors
 
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Actor
+import io.github.fantasylum.rgbot.Color
 
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
 
-class Bot(var velocity: Float): Actor() {
+class Bot(var velocity: Float,
+          private val nextColor: (Color) -> Color = { Color.values()[(it.ordinal + 1) % Color.values().size] }): Actor() {
     private val textures = mapOf(RED   to RGBot.getAnimation(Animations.BOT_RED),
                                  GREEN to RGBot.getAnimation(Animations.BOT_GREEN),
                                  BLUE  to RGBot.getAnimation(Animations.BOT_BLUE))
-    private var color     = RED
+    var color = GREEN
+        private set
     private var timeAlive = 0f
+    private var alive     = true
 
     init {
-        val texture = textures[color]!!.getKeyFrame(0f)
         width   = WIDTH
         height  = HEIGHT
 
@@ -26,12 +30,24 @@ class Bot(var velocity: Float): Actor() {
 
     override fun act(delta: Float) {
         timeAlive += delta
-        x += velocity * delta
+        if (alive)
+            x += velocity * delta
+        else
+            // TODO: add more realistic death handling
+            y -= velocity * delta
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
         val texture = textures[color]!!.getKeyFrame(timeAlive, true)
         batch.draw(texture, x, y, width, height)
+    }
+
+    fun changeColor() {
+        color = nextColor(color)
+    }
+
+    fun destroy() {
+        alive = false
     }
 
     companion object {

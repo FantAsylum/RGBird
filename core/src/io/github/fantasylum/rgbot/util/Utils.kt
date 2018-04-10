@@ -1,5 +1,6 @@
 package io.github.fantasylum.rgbot.util
 
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -27,4 +28,11 @@ fun Button.setOnClickListener(callback: () -> Unit) {
             callback()
         }
     })
+}
+
+infix fun Actor.collides(other: Actor): Boolean {
+    return this.x     < other.right
+        && this.right > other.x
+        && this.y     < other.top
+        && this.top   > other.y
 }

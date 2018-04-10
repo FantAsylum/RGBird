@@ -32,6 +32,7 @@ class GameScreen: ScreenAdapter() {
     override fun render(delta: Float) {
         mainStage.act(delta)
         mainStage.draw()
+        obstacle.checkCollision(bot)
     }
 
     companion object {
