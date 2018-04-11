@@ -93,8 +93,9 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
 
     companion object {
-        private val HEIGHT = 300f
-        private val WIDTH  = 10f
+        val HEIGHT = 300f
+        val WIDTH  = 10f
+
         private val generationBuffer = GdxArray<Color>(Color.values().size)
 
         fun generateEven(): Obstacle {

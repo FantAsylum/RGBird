@@ -2,7 +2,10 @@ package io.github.fantasylum.rgbot.screens
 
 import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.PooledLinkedList
 import io.github.fantasylum.rgbot.Color
@@ -13,7 +16,7 @@ import io.github.fantasylum.rgbot.actors.Obstacle
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
     private val camera          = mainStage.camera
-    private val bot             = Bot(BOT_VELOCITY)
+    private val bot             = Bot()
     // TODO: consider adding recycling references (Bot, Obstacle, Obsctacle.Part) for minimize runtime allocations
     // TODO: add score
 
@@ -26,8 +29,17 @@ class GameScreen: ScreenAdapter() {
         bot.x = mainStage.width  / 2f
         bot.y = mainStage.height / 2f
 
-        obstacle.x = mainStage.width / 1.5f
+        obstacle.x = mainStage.width / 1.2f
         obstacle.y = 60f
+
+        mainStage.addListener(object : InputListener() {
+            // TODO: add simple mode variant
+            override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                bot.moveUp()
+                return true
+            }
+
+        })
         Gdx.input.inputProcessor = mainStage
     }
 
@@ -41,7 +53,6 @@ class GameScreen: ScreenAdapter() {
     }
 
     companion object {
-        val BOT_VELOCITY = 10f
         val OBSTACLE_BUFFER_SIZE = 5
     }
 }
