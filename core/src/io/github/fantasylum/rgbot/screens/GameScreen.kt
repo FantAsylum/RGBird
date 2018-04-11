@@ -1,8 +1,10 @@
 package io.github.fantasylum.rgbot.screens
 
+import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.PooledLinkedList
 import io.github.fantasylum.rgbot.Color
 
 import io.github.fantasylum.rgbot.actors.Bot
@@ -10,7 +12,10 @@ import io.github.fantasylum.rgbot.actors.Obstacle
 
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
+    private val camera          = mainStage.camera
     private val bot             = Bot(BOT_VELOCITY)
+    // TODO: consider adding recycling references (Bot, Obstacle, Obsctacle.Part) for minimize runtime allocations
+    // TODO: add score
 
     // TODO: stub logic, implement automatic generation
     private val obstacle        = Obstacle(listOf(
@@ -32,10 +37,14 @@ class GameScreen: ScreenAdapter() {
     override fun render(delta: Float) {
         mainStage.act(delta)
         mainStage.draw()
+
+        camera.position.x = bot.x
+        camera.position.y = bot.y
         obstacle.checkCollision(bot)
     }
 
     companion object {
         val BOT_VELOCITY = 10f
+        val OBSTACLE_BUFFER_SIZE = 5
     }
 }
