@@ -11,12 +11,13 @@ import com.badlogic.gdx.utils.PooledLinkedList
 import io.github.fantasylum.rgbot.Color
 
 import io.github.fantasylum.rgbot.actors.Bot
+import io.github.fantasylum.rgbot.actors.FlappyBot
 import io.github.fantasylum.rgbot.actors.Obstacle
 
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
     private val camera          = mainStage.camera
-    private val bot             = Bot()
+    private val bot             = FlappyBot()
     // TODO: consider adding recycling references (Bot, Obstacle, Obsctacle.Part) for minimize runtime allocations
     // TODO: add score
 

@@ -10,19 +10,17 @@ import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
 
-class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
-          val minHeight: Float = 0f,
-          val maxHeight: Float = Obstacle.HEIGHT,
-          private val nextColor: (Color) -> Color = { Color.values()[(it.ordinal + 1) % Color.values().size] }): Actor() {
+abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
+                   private val nextColor: (Color) -> Color = defaultNextColor): Actor() {
     private val textures = mapOf(RED   to RGBot.getAnimation(Animations.BOT_RED),
                                  GREEN to RGBot.getAnimation(Animations.BOT_GREEN),
                                  BLUE  to RGBot.getAnimation(Animations.BOT_BLUE))
     var color = GREEN
         private set
 
-    private val velocity  = Vector2(velocity, 0f)
     private var timeAlive = 0f
-    private var alive     = true
+    protected val velocity  = Vector2(velocity, 0f)
+    protected var alive     = true
 
     init {
         width   = WIDTH
@@ -38,14 +36,9 @@ class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
 
         if (alive) {
             x += velocity.x * delta
-            y += velocity.y * delta
-        } else {
-            // TODO: add more realistic death handling
-            y -= velocity.x * delta
         }
+    // TODO: add more realistic death handling
 
-        velocity.y = MathUtils.clamp(velocity.y + VERTICAL_ACCELERATION * delta, MIN_VERTICAL_VELOCITY, MAX_VERTICAL_VELOCITY)
-        y = MathUtils.clamp(y, minHeight, maxHeight)
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
@@ -61,18 +54,13 @@ class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
         alive = false
     }
 
-    fun moveUp() {
-        velocity.y = MOVE_UP_VELOCITY
-    }
-
     companion object {
+        val defaultNextColor: (Color) -> Color = { Color.values()[(it.ordinal + 1) % Color.values().size] }
+
         val WIDTH = 30f
         val HEIGHT = 30f
 
-        private const val DEFAULT_HORIZONTAL_VELOCITY = 60f
-        private const val VERTICAL_ACCELERATION       = -250f
-        private const val MOVE_UP_VELOCITY            = 100f
-        private val MIN_VERTICAL_VELOCITY             = -100f
-        private val MAX_VERTICAL_VELOCITY             = 400f
+        internal const val DEFAULT_HORIZONTAL_VELOCITY = 60f
+
     }
 }
