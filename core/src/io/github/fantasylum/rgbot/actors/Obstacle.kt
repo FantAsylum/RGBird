@@ -1,5 +1,6 @@
 package io.github.fantasylum.rgbot.actors
 
+import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -94,5 +95,13 @@ class Obstacle(private val parts: List<Part>): Actor() {
     companion object {
         private val HEIGHT = 300f
         private val WIDTH  = 10f
+        private val generationBuffer = GdxArray<Color>(Color.values().size)
+
+        fun generateEven(): Obstacle {
+            generationBuffer.addAll(*Color.values())
+            fun next() = Part(generationBuffer.removeIndex(MathUtils.random(generationBuffer.size - 1)), 1f / 3)
+
+            return Obstacle(listOf(next(), next(), next()))
+        }
     }
 }

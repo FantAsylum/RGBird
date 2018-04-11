@@ -18,10 +18,7 @@ class GameScreen: ScreenAdapter() {
     // TODO: add score
 
     // TODO: stub logic, implement automatic generation
-    private val obstacle        = Obstacle(listOf(
-            Obstacle.Part(Color.RED, 0.33f),
-            Obstacle.Part(Color.GREEN, 0.33f),
-            Obstacle.Part(Color.BLUE, 0.34f)))
+    private val obstacle        = Obstacle.generateEven()
 
     init {
         mainStage.addActor(bot)
