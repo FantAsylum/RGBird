@@ -7,9 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.resid.Animations
-import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_BLUE
-import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_GREEN
-import io.github.fantasylum.rgbot.resid.Animations.OBSTACLE_RED
 import io.github.fantasylum.rgbot.util.collides
 
 /**
@@ -25,8 +22,8 @@ class Obstacle(private val parts: List<Part>): Actor() {
     init {
         assert(parts.distinctBy { it.color }.size == 3)
         assert(MathUtils.isZero(parts.fold(0f, { acc, part -> acc + part.proportion }) - 1f))
-        height = HEIGHT
-        width = WIDTH
+        height = DEFAULT_HEIGHT
+        width = DEFAULT_WIDTH
     }
 
     private val textures = mapOf(
@@ -93,16 +90,16 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
 
     companion object {
-        val HEIGHT = 300f
-        val WIDTH  = 10f
+        val DEFAULT_HEIGHT = 300f
+        val DEFAULT_WIDTH  = 10f
 
         private val generationBuffer = GdxArray<Color>(Color.values().size)
 
-        fun generateEven(): Obstacle {
+        val generateEven: () -> Obstacle = {
             generationBuffer.addAll(*Color.values())
             fun next() = Part(generationBuffer.removeIndex(MathUtils.random(generationBuffer.size - 1)), 1f / 3)
 
-            return Obstacle(listOf(next(), next(), next()))
+            Obstacle(listOf(next(), next(), next()))
         }
     }
 }

@@ -5,7 +5,7 @@ import io.github.fantasylum.rgbot.Color
 
 class FlappyBot(velocity: Float = Bot.DEFAULT_HORIZONTAL_VELOCITY,
                 val minHeight: Float = 0f,
-                val maxHeight: Float = Obstacle.HEIGHT,
+                val maxHeight: Float = Obstacle.DEFAULT_HEIGHT,
                 private val nextColor: (Color) -> Color = Bot.defaultNextColor): Bot(velocity, nextColor) {
 
     override fun act(delta: Float) {

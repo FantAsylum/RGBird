@@ -9,30 +9,20 @@ import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.PooledLinkedList
 import io.github.fantasylum.rgbot.Color
-
-import io.github.fantasylum.rgbot.actors.Bot
-import io.github.fantasylum.rgbot.actors.FlappyBot
-import io.github.fantasylum.rgbot.actors.Obstacle
-import io.github.fantasylum.rgbot.actors.SimpleBot
+import io.github.fantasylum.rgbot.actors.*
 
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
     private val camera          = mainStage.camera
     private val bot: Bot        = FlappyBot()
-    // TODO: consider adding recycling references (Bot, Obstacle, Obsctacle.Part) for minimize runtime allocations
     // TODO: add score
 
-    // TODO: stub logic, implement automatic generation
-    private val obstacle        = Obstacle.generateEven()
+    private val obstacleManager = ObstacleManager(mainStage.width, 150f, bot, mainStage)
 
     init {
         mainStage.addActor(bot)
-        mainStage.addActor(obstacle)
         bot.x = mainStage.width  / 2f
         bot.y = mainStage.height / 2f
-
-        obstacle.x = mainStage.width / 1.2f
-        obstacle.y = 60f
 
         when (bot) {
             is FlappyBot ->  mainStage.addListener(object : InputListener() {
@@ -79,14 +69,10 @@ class GameScreen: ScreenAdapter() {
 
     override fun render(delta: Float) {
         mainStage.act(delta)
+        obstacleManager.act()
         mainStage.draw()
 
         camera.position.x = bot.x
         camera.position.y = bot.y
-        obstacle.checkCollision(bot)
-    }
-
-    companion object {
-        val OBSTACLE_BUFFER_SIZE = 5
     }
 }
