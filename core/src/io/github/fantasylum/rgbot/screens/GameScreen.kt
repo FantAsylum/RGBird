@@ -13,11 +13,12 @@ import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.actors.Bot
 import io.github.fantasylum.rgbot.actors.FlappyBot
 import io.github.fantasylum.rgbot.actors.Obstacle
+import io.github.fantasylum.rgbot.actors.SimpleBot
 
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
     private val camera          = mainStage.camera
-    private val bot             = FlappyBot()
+    private val bot: Bot        = FlappyBot()
     // TODO: consider adding recycling references (Bot, Obstacle, Obsctacle.Part) for minimize runtime allocations
     // TODO: add score
 
@@ -33,14 +34,46 @@ class GameScreen: ScreenAdapter() {
         obstacle.x = mainStage.width / 1.2f
         obstacle.y = 60f
 
-        mainStage.addListener(object : InputListener() {
-            // TODO: add simple mode variant
-            override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
-                bot.moveUp()
-                return true
-            }
+        when (bot) {
+            is FlappyBot ->  mainStage.addListener(object : InputListener() {
+                override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                    bot.moveUp()
+                    return true
+                }
+            })
+            is SimpleBot -> mainStage.addListener(object : InputListener() {
+                val OBSERVABLE_TOUCHES_COUNT = 2
+                val touches = Array<Int?>(OBSERVABLE_TOUCHES_COUNT, { null })
 
-        })
+                fun updatePoints() {
+                    for (i in 0 until OBSERVABLE_TOUCHES_COUNT)
+                        touches[i] = if (Gdx.input.isTouched(i))
+                                         Gdx.input.getY(i)
+                                     else
+                                         null
+
+                    bot.isMovingUp   = touches.any { it != null && it < camera.viewportHeight / 2 }
+                    bot.isMovingDown = touches.any { it != null && it > camera.viewportHeight / 2 }
+                }
+
+                override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                    if (pointer <= OBSERVABLE_TOUCHES_COUNT) {
+                        updatePoints()
+                        return true
+                    }
+                    return false
+                }
+
+                override fun touchDragged(event: InputEvent, x: Float, y: Float, pointer: Int) {
+                    updatePoints()
+                }
+
+                override fun touchUp(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int) {
+                    updatePoints()
+                }
+            })
+
+        }
         Gdx.input.inputProcessor = mainStage
     }
 

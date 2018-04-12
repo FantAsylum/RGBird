@@ -36,6 +36,7 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
 
         if (alive) {
             x += velocity.x * delta
+            y += velocity.y * delta
         }
     // TODO: add more realistic death handling
 

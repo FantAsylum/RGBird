@@ -11,10 +11,6 @@ class FlappyBot(velocity: Float = Bot.DEFAULT_HORIZONTAL_VELOCITY,
     override fun act(delta: Float) {
         super.act(delta)
 
-        if (alive) {
-            y += velocity.y * delta
-        }
-
         velocity.y = MathUtils.clamp(velocity.y + VERTICAL_ACCELERATION * delta, MIN_VERTICAL_VELOCITY, MAX_VERTICAL_VELOCITY)
         y = MathUtils.clamp(y, minHeight, maxHeight)
     }
