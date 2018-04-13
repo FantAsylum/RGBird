@@ -9,11 +9,15 @@ import io.github.fantasylum.rgbot.Color
  * @param upHeight fixed height for up bot position
  * @param downHeight fixed height for down bot position
  */
-class SimpleBot(val upHeight: Float,
-                val middleHeight: Float,
-                val downHeight: Float,
+class SimpleBot(upHeight: Float,
+                middleHeight: Float,
+                downHeight: Float,
                 velocity: Float = Bot.DEFAULT_HORIZONTAL_VELOCITY,
                 nextColor: (Color) -> Color = Bot.defaultNextColor) : Bot(velocity, nextColor) {
+
+    val upHeight     = upHeight + HEIGHT / 2
+    val middleHeight = middleHeight - HEIGHT / 2
+    val downHeight   = downHeight - HEIGHT / 2 * 3
 
     init {
         assert(upHeight > middleHeight)
@@ -56,6 +60,6 @@ class SimpleBot(val upHeight: Float,
     }
 
     companion object {
-        val VERTICAL_VELOCITY = 100f
+        val VERTICAL_VELOCITY = 200f
     }
 }

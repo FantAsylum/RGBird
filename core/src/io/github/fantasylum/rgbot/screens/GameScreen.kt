@@ -14,7 +14,7 @@ import io.github.fantasylum.rgbot.actors.*
 class GameScreen: ScreenAdapter() {
     private val mainStage       = Stage()
     private val camera          = mainStage.camera
-    private val bot: Bot        = FlappyBot()
+    private val bot: Bot        = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
     // TODO: add score
 
     private val obstacleManager = ObstacleManager(mainStage.width, 150f, bot, mainStage)
