@@ -8,13 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.PooledLinkedList
+import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.StretchViewport
 import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.actors.*
 
 class GameScreen: ScreenAdapter() {
-    private val mainStage       = Stage()
-    private val camera          = mainStage.camera
-    private val bot: Bot        = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
+    private val viewport  = FitViewport(WORLD_WIDTH, WORLD_HEIGHT)
+    private val mainStage = Stage(viewport)
+    private val camera    = mainStage.camera
+    private val bot: Bot  = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
     // TODO: add score
 
     private val obstacleManager = ObstacleManager(mainStage.width, 150f, bot, mainStage)
@@ -74,5 +77,10 @@ class GameScreen: ScreenAdapter() {
 
         camera.position.x = bot.x
         camera.position.y = bot.y
+    }
+
+    companion object {
+        val WORLD_WIDTH = 408f
+        val WORLD_HEIGHT = 272f
     }
 }

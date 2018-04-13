@@ -61,7 +61,7 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
         val WIDTH = 30f
         val HEIGHT = 30f
 
-        internal const val DEFAULT_HORIZONTAL_VELOCITY = 60f
+        internal const val DEFAULT_HORIZONTAL_VELOCITY = 120f
 
     }
 }

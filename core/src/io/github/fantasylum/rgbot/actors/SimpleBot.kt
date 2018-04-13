@@ -60,6 +60,6 @@ class SimpleBot(upHeight: Float,
     }
 
     companion object {
-        val VERTICAL_VELOCITY = 200f
+        val VERTICAL_VELOCITY = 400f
     }
 }
