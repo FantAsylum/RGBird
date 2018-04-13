@@ -45,8 +45,8 @@ class GameScreen: ScreenAdapter() {
                                      else
                                          null
 
-                    bot.isMovingUp   = touches.any { it != null && it < camera.viewportHeight / 2 }
-                    bot.isMovingDown = touches.any { it != null && it > camera.viewportHeight / 2 }
+                    bot.isMovingUp   = touches.any { it != null && it < Gdx.graphics.height / 2 }
+                    bot.isMovingDown = touches.any { it != null && it > Gdx.graphics.height / 2 }
                 }
 
                 override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
@@ -76,7 +76,6 @@ class GameScreen: ScreenAdapter() {
         mainStage.draw()
 
         camera.position.x = bot.x
-        camera.position.y = bot.y
     }
 
     companion object {
