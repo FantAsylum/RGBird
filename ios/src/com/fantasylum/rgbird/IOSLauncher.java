@@ -5,13 +5,13 @@ import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.fantasylum.rgbird.RGBirdGame;
+import io.github.fantasylum.rgbot.RGBot;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override
     protected IOSApplication createApplication() {
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new RGBirdGame(), config);
+        return new IOSApplication(RGBot.INSTANCE, config);
     }
 
     public static void main(String[] argv) {

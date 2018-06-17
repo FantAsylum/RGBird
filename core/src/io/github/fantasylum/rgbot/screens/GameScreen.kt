@@ -74,7 +74,6 @@ class GameScreen: ScreenAdapter() {
         mainStage.act(delta)
         obstacleManager.act()
         mainStage.draw()
-
         camera.position.x = bot.x
     }
 
