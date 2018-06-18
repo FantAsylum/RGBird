@@ -12,12 +12,17 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.actors.*
+import com.badlogic.gdx.math.Vector3
+
+
 
 class GameScreen: ScreenAdapter() {
     private val viewport  = FitViewport(WORLD_WIDTH, WORLD_HEIGHT)
     private val mainStage = Stage(viewport)
     private val camera    = mainStage.camera
-    private val bot: Bot  = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
+    //private val bot: Bot  = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
+
+    private val bot: Bot  = FingerBot()
     // TODO: add score
 
     private val obstacleManager = ObstacleManager(mainStage.width, 150f, bot, mainStage)
@@ -65,7 +70,29 @@ class GameScreen: ScreenAdapter() {
                     updatePoints()
                 }
             })
+            is FingerBot -> mainStage.addListener(object : InputListener() {
 
+                fun updatePoints() {
+                    if (Gdx.input.isTouched) {
+                        val input = Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+                        camera.unproject(input)
+                        bot.inputY = input.y
+                    }
+                }
+
+                override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                    updatePoints()
+                    return true
+                }
+
+                override fun touchDragged(event: InputEvent, x: Float, y: Float, pointer: Int) {
+                    updatePoints()
+                }
+
+                override fun touchUp(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int) {
+                    updatePoints()
+                }
+            })
         }
         Gdx.input.inputProcessor = mainStage
     }
