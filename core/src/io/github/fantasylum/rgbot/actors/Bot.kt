@@ -1,6 +1,7 @@
 package io.github.fantasylum.rgbot.actors
 
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -18,9 +19,12 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     var color = GREEN
         private set
 
+    private val fireEffect = ParticleEffect(RGBot.fireAnimation)
     private var timeAlive = 0f
     protected val velocity  = Vector2(velocity, 0f)
     protected var alive     = true
+
+    private var delta = 0f
 
     init {
         width   = WIDTH
@@ -38,13 +42,16 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
             x += velocity.x * delta
             y += velocity.y * delta
         }
-    // TODO: add more realistic death handling
 
+        this.delta = delta
+    // TODO: add more realistic death handling
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
         val texture = textures[color]!!.getKeyFrame(timeAlive, true)
         batch.draw(texture, x, y, width, height)
+        fireEffect.setPosition(x + width / 2,y + height / 5)
+        fireEffect.draw(batch, delta)
     }
 
     fun changeColor() {

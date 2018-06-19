@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 
 import io.github.fantasylum.rgbot.resid.ATLAS
@@ -25,10 +26,18 @@ object RGBot : ApplicationAdapter() {
             finishLoading()
             get<TextureAtlas>(ATLAS)
         }
-
+    }
+    val fireAnimation by lazy {
+        with (assetManager) {
+            load("effects/fire.p", ParticleEffect::class.java)
+            finishLoading()
+            get<ParticleEffect>("effects/fire.p")
+        }
     }
 
     override fun create() {
+        val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f
+        fireAnimation.scaleEffect(animationScaleFactor)
         pushScreen(MenuScreen())
     }
 
