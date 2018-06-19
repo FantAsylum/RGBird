@@ -49,9 +49,9 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
 
     override fun draw(batch: Batch, parentAlpha: Float) {
         val texture = textures[color]!!.getKeyFrame(timeAlive, true)
-        batch.draw(texture, x, y, width, height)
         fireEffect.setPosition(x + width / 2,y + height / 5)
         fireEffect.draw(batch, delta)
+        batch.draw(texture, x, y, width, height)
     }
 
     fun changeColor() {
