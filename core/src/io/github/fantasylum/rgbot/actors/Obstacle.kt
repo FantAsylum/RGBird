@@ -31,6 +31,11 @@ class Obstacle(private val parts: List<Part>): Actor() {
             Color.GREEN to RGBot.getAnimation(Animations.OBSTACLE_GREEN),
             Color.BLUE to RGBot.getAnimation(Animations.OBSTACLE_BLUE))
 
+    private val blockTextures = mapOf(
+            Color.RED to RGBot.getAnimation(Animations.BLOCK_RED),
+            Color.GREEN to RGBot.getAnimation(Animations.BLOCK_GREEN),
+            Color.BLUE to RGBot.getAnimation(Animations.BLOCK_BLUE))
+
     private var timeAlive = 0f
 
     private var active = true
@@ -45,6 +50,7 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
         var startY = y
 
+        // TODO: check proportion (last part is smaller than the others!)
         fun Part.drawPart() {
             val partHeight = height * proportion
             batch.draw(
@@ -53,7 +59,24 @@ class Obstacle(private val parts: List<Part>): Actor() {
                     startY,
                     width,
                     partHeight)
+            // BOTTOM BLOCK
+            batch.draw(
+                    blockTextures[color]!!.getKeyFrame(timeAlive, true),
+                    x - BLOCK_EXPAND_WIDTH / 2,
+                    startY,
+                    width + BLOCK_EXPAND_WIDTH,
+                    BLOCK_HEIGHT
+            )
             startY += partHeight
+            // TOP BLOCK
+            batch.draw(
+                    blockTextures[color]!!.getKeyFrame(timeAlive, true),
+                    x - BLOCK_EXPAND_WIDTH / 2,
+                    startY - BLOCK_HEIGHT,
+                    width + BLOCK_EXPAND_WIDTH,
+                    BLOCK_HEIGHT
+            )
+            println(color)
         }
 
         parts.forEach { it.drawPart() }
@@ -92,6 +115,8 @@ class Obstacle(private val parts: List<Part>): Actor() {
     companion object {
         val DEFAULT_HEIGHT = 300f
         val DEFAULT_WIDTH  = 10f
+        val BLOCK_HEIGHT = 10f
+        val BLOCK_EXPAND_WIDTH = 10f
 
         private val generationBuffer = GdxArray<Color>(Color.values().size)
 
