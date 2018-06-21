@@ -1,5 +1,6 @@
 package io.github.fantasylum.rgbot.actors
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
@@ -113,7 +114,7 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
 
     companion object {
-        val DEFAULT_HEIGHT = 300f
+        val DEFAULT_HEIGHT = Gdx.graphics.height.toFloat()
         val DEFAULT_WIDTH  = 10f
         val BLOCK_HEIGHT = 10f
         val BLOCK_EXPAND_WIDTH = 10f
