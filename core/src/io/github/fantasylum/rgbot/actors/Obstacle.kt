@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.resid.Animations
+import io.github.fantasylum.rgbot.screens.GameScreen
 import io.github.fantasylum.rgbot.util.collides
 
 /**
@@ -113,7 +114,7 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
 
     companion object {
-        val DEFAULT_HEIGHT = Gdx.graphics.height.toFloat()
+        val DEFAULT_HEIGHT = GameScreen.WORLD_HEIGHT
         val DEFAULT_WIDTH  = 10f
         val BLOCK_HEIGHT = 10f
         val BLOCK_EXPAND_WIDTH = 10f

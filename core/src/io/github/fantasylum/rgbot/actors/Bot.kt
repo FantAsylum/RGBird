@@ -1,5 +1,6 @@
 package io.github.fantasylum.rgbot.actors
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.math.MathUtils
@@ -10,6 +11,7 @@ import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
+import io.github.fantasylum.rgbot.screens.GameScreen
 
 abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
                    private val nextColor: (Color) -> Color = defaultNextColor): Actor() {
@@ -24,6 +26,7 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     private var timeAlive       = 0f
     protected val velocity      = Vector2(velocity, 0f)
     protected var alive         = true
+    private var destroyed       = false
 
     private var delta = 0f
 
@@ -45,7 +48,9 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
         }
 
         this.delta = delta
-    // TODO: add more realistic death handling
+
+        if (y < 0 || y > GameScreen.WORLD_HEIGHT)
+            this.destroy()
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
@@ -55,8 +60,11 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
             fireEffect.draw(batch, delta)
             batch.draw(texture, x, y, width, height)
         } else {
-            if (!explosionEffect.isComplete)
+            if (!explosionEffect.isComplete) {
                 explosionEffect.draw(batch, delta)
+            } else {
+                destroyed = true
+            }
         }
     }
 
