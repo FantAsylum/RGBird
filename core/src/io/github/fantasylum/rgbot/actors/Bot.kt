@@ -89,4 +89,8 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
         internal const val DEFAULT_HORIZONTAL_VELOCITY = 120f
 
     }
+
+    fun isAlive() : Boolean {
+        return alive
+    }
 }
