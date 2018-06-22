@@ -1,6 +1,7 @@
 package io.github.fantasylum.rgbot.actors
 
 import com.badlogic.gdx.scenes.scene2d.Stage
+import io.github.fantasylum.rgbot.screens.GameScreen
 import java.util.LinkedList
 import java.util.Deque
 

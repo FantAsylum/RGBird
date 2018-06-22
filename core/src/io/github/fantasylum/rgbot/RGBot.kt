@@ -9,12 +9,16 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import io.github.fantasylum.rgbot.animations.Flash
 
 import io.github.fantasylum.rgbot.resid.ATLAS
+import io.github.fantasylum.rgbot.screens.GameScreen
 import io.github.fantasylum.rgbot.screens.MenuScreen
 
 object RGBot : ApplicationAdapter() {
@@ -43,17 +47,23 @@ object RGBot : ApplicationAdapter() {
             get<ParticleEffect>("effects/explosion.p")
         }
     }
+    private val scanLineWidth = 1f
 
     override fun create() {
         val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f
         fireAnimation.scaleEffect(animationScaleFactor)
         pushScreen(MenuScreen())
+        Gdx.gl.glLineWidth(scanLineWidth)
     }
 
     override fun render() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
         screenStack.peek().render(Gdx.graphics.deltaTime)
+        Gdx.gl.glEnable(GL20.GL_BLEND)
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+        drawTvScanLines()
+        Gdx.gl.glDisable(GL20.GL_BLEND)
     }
 
     override fun dispose() {
@@ -84,5 +94,17 @@ object RGBot : ApplicationAdapter() {
     fun getAnimation(id: String) = Animation(ANIMATION_FRAME_DURATION, atlas.findRegions(id))
 
     fun getTexture(id: String) = TextureRegion(atlas.findRegion(id))
+
+    // TODO: think about implementing jittering
+    private fun drawTvScanLines() {
+        val shapeRenderer = ShapeRenderer()
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
+        shapeRenderer.color = Color(0f,0f,0f,0.2f)
+        for (i in 0..Gdx.graphics.height) {
+            if (i % (scanLineWidth.toInt() + 1) == 0)
+                shapeRenderer.line(Vector2(0f,i.toFloat()), Vector2(Gdx.graphics.width.toFloat(),i.toFloat()))
+        }
+        shapeRenderer.end()
+    }
 
 }
