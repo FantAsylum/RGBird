@@ -1,7 +1,5 @@
 package io.github.fantasylum.rgbot
 
-import java.util.LinkedList
-
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
@@ -20,6 +18,7 @@ import io.github.fantasylum.rgbot.animations.Flash
 import io.github.fantasylum.rgbot.resid.ATLAS
 import io.github.fantasylum.rgbot.screens.GameScreen
 import io.github.fantasylum.rgbot.screens.MenuScreen
+import java.util.*
 
 object RGBot : ApplicationAdapter() {
     private val ANIMATION_FRAME_DURATION = 0.1f
@@ -48,6 +47,7 @@ object RGBot : ApplicationAdapter() {
         }
     }
     private val scanLineWidth = 1f
+    private val rand = Random()
 
     override fun create() {
         val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f
@@ -95,16 +95,21 @@ object RGBot : ApplicationAdapter() {
 
     fun getTexture(id: String) = TextureRegion(atlas.findRegion(id))
 
-    // TODO: think about implementing jittering
     private fun drawTvScanLines() {
         val shapeRenderer = ShapeRenderer()
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
-        shapeRenderer.color = Color(0f,0f,0f,0.2f)
         for (i in 0..Gdx.graphics.height) {
-            if (i % (scanLineWidth.toInt() + 1) == 0)
-                shapeRenderer.line(Vector2(0f,i.toFloat()), Vector2(Gdx.graphics.width.toFloat(),i.toFloat()))
+            if (i % (scanLineWidth.toInt() + 1) == 0) {
+                val alphaAddition = rand.nextInt(5..10).toFloat() / 100
+                shapeRenderer.color = Color(0f, 0f, 0f, 0.1f + alphaAddition)
+                shapeRenderer.line(Vector2(0f, i.toFloat()), Vector2(Gdx.graphics.width.toFloat(), i.toFloat()))
+            }
         }
         shapeRenderer.end()
+    }
+
+    fun Random.nextInt(range: IntRange): Int {
+        return range.start + nextInt(range.last - range.start)
     }
 
 }
