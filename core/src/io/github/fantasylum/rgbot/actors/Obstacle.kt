@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Actor
 import io.github.fantasylum.rgbot.Color
 import io.github.fantasylum.rgbot.RGBot
+import io.github.fantasylum.rgbot.animations.Flash
 import io.github.fantasylum.rgbot.resid.Animations
 import io.github.fantasylum.rgbot.screens.GameScreen
 import io.github.fantasylum.rgbot.util.collides
@@ -29,9 +30,9 @@ class Obstacle(private val parts: List<Part>): Actor() {
     }
 
     private val textures = mapOf(
-            Color.RED to RGBot.getAnimation(Animations.OBSTACLE_RED),
-            Color.GREEN to RGBot.getAnimation(Animations.OBSTACLE_GREEN),
-            Color.BLUE to RGBot.getAnimation(Animations.OBSTACLE_BLUE))
+            Color.RED to Flash(RGBot.getTexture(Animations.OBSTACLE_RED),2f,true, 0.5f),
+            Color.GREEN to Flash(RGBot.getTexture(Animations.OBSTACLE_GREEN),2f,true, 0.5f),
+            Color.BLUE to Flash(RGBot.getTexture(Animations.OBSTACLE_BLUE),2f,true, 0.5f))
 
     private val blockTextures = mapOf(
             Color.RED to RGBot.getAnimation(Animations.BLOCK_RED),
@@ -39,11 +40,13 @@ class Obstacle(private val parts: List<Part>): Actor() {
             Color.BLUE to RGBot.getAnimation(Animations.BLOCK_BLUE))
 
     private var timeAlive = 0f
+    private var delta = 0f
 
     private var active = true
 
     override fun act(delta: Float) {
         timeAlive += delta
+        this.delta = delta
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
@@ -52,15 +55,15 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
         var startY = y
 
-        // TODO: check proportion (last part is smaller than the others!)
         fun Part.drawPart() {
             val partHeight = height * proportion
-            batch.draw(
-                    textures[color]!!.getKeyFrame(timeAlive, true),
+            textures[color]!!.draw(
+                    batch,
                     x,
                     startY,
                     width,
-                    partHeight)
+                    partHeight,
+                    delta)
             // BOTTOM BLOCK
             batch.draw(
                     blockTextures[color]!!.getKeyFrame(timeAlive, true),

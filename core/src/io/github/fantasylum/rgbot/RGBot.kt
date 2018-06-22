@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import io.github.fantasylum.rgbot.animations.Flash
 
 import io.github.fantasylum.rgbot.resid.ATLAS
 import io.github.fantasylum.rgbot.screens.MenuScreen
@@ -80,5 +82,7 @@ object RGBot : ApplicationAdapter() {
     }
 
     fun getAnimation(id: String) = Animation(ANIMATION_FRAME_DURATION, atlas.findRegions(id))
+
+    fun getTexture(id: String) = TextureRegion(atlas.findRegion(id))
 
 }
