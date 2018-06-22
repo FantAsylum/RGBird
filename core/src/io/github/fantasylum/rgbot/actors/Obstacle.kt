@@ -77,7 +77,6 @@ class Obstacle(private val parts: List<Part>): Actor() {
                     width + BLOCK_EXPAND_WIDTH,
                     BLOCK_HEIGHT
             )
-            println(color)
         }
 
         parts.forEach { it.drawPart() }
@@ -86,7 +85,7 @@ class Obstacle(private val parts: List<Part>): Actor() {
 
 
     fun checkCollision(bot: Bot) {
-        if (! active)
+        if (!active)
             return
 
         if (this collides bot) {

@@ -34,6 +34,13 @@ object RGBot : ApplicationAdapter() {
             get<ParticleEffect>("effects/fire.p")
         }
     }
+    val explosionAnimation by lazy {
+        with (assetManager) {
+            load("effects/explosion.p", ParticleEffect::class.java)
+            finishLoading()
+            get<ParticleEffect>("effects/explosion.p")
+        }
+    }
 
     override fun create() {
         val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f

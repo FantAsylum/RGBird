@@ -19,10 +19,11 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     var color = GREEN
         private set
 
-    private val fireEffect = ParticleEffect(RGBot.fireAnimation)
-    private var timeAlive = 0f
-    protected val velocity  = Vector2(velocity, 0f)
-    protected var alive     = true
+    private val fireEffect      = ParticleEffect(RGBot.fireAnimation)
+    private val explosionEffect = ParticleEffect(RGBot.explosionAnimation)
+    private var timeAlive       = 0f
+    protected val velocity      = Vector2(velocity, 0f)
+    protected var alive         = true
 
     private var delta = 0f
 
@@ -48,10 +49,15 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
-        val texture = textures[color]!!.getKeyFrame(timeAlive, true)
-        fireEffect.setPosition(x + width / 2,y + height / 5)
-        fireEffect.draw(batch, delta)
-        batch.draw(texture, x, y, width, height)
+        if (alive) {
+            val texture = textures[color]!!.getKeyFrame(timeAlive, true)
+            fireEffect.setPosition(x + width / 2, y + height / 5)
+            fireEffect.draw(batch, delta)
+            batch.draw(texture, x, y, width, height)
+        } else {
+            if (!explosionEffect.isComplete)
+                explosionEffect.draw(batch, delta)
+        }
     }
 
     fun changeColor() {
@@ -59,7 +65,11 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     }
 
     fun destroy() {
-        alive = false
+        if (alive) {
+            alive = false
+            explosionEffect.setPosition(x + width / 2, y + height / 2)
+            explosionEffect.start()
+        }
     }
 
     companion object {
