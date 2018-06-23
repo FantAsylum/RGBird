@@ -32,11 +32,25 @@ object RGBot : ApplicationAdapter() {
             get<TextureAtlas>(ATLAS)
         }
     }
-    val fireAnimation by lazy {
+    val fireAnimationRed by lazy {
         with (assetManager) {
-            load("effects/fire.p", ParticleEffect::class.java)
+            load("effects/fire_red.p", ParticleEffect::class.java)
             finishLoading()
-            get<ParticleEffect>("effects/fire.p")
+            get<ParticleEffect>("effects/fire_red.p")
+        }
+    }
+    val fireAnimationGreen by lazy {
+        with (assetManager) {
+            load("effects/fire_green.p", ParticleEffect::class.java)
+            finishLoading()
+            get<ParticleEffect>("effects/fire_green.p")
+        }
+    }
+    val fireAnimationBlue by lazy {
+        with (assetManager) {
+            load("effects/fire_blue.p", ParticleEffect::class.java)
+            finishLoading()
+            get<ParticleEffect>("effects/fire_blue.p")
         }
     }
     val explosionAnimation by lazy {
@@ -51,7 +65,9 @@ object RGBot : ApplicationAdapter() {
 
     override fun create() {
         val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f
-        fireAnimation.scaleEffect(animationScaleFactor)
+        fireAnimationRed.scaleEffect(animationScaleFactor)
+        fireAnimationGreen.scaleEffect(animationScaleFactor)
+        fireAnimationBlue.scaleEffect(animationScaleFactor)
         pushScreen(MenuScreen())
         Gdx.gl.glLineWidth(scanLineWidth)
     }
