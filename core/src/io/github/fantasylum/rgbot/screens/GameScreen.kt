@@ -82,7 +82,7 @@ class GameScreen: ScreenAdapter() {
 
                 fun updatePoints() {
                     if (Gdx.input.isTouched) {
-                        input = Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+                        input.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
                         camera.unproject(input)
                         bot.inputY = input.y
                     }
