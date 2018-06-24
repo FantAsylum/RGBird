@@ -78,10 +78,11 @@ class GameScreen: ScreenAdapter() {
                 }
             })
             is FingerBot -> mainStage.addListener(object : InputListener() {
+                var input = Vector3(0f,0f,0f)
 
                 fun updatePoints() {
                     if (Gdx.input.isTouched) {
-                        val input = Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+                        input = Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
                         camera.unproject(input)
                         bot.inputY = input.y
                     }
