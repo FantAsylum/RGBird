@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.TimeUtils
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.resid.ATLAS
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+
+
 
 
 class LoadingScreen : Screen {
@@ -23,6 +27,7 @@ class LoadingScreen : Screen {
     private val logoPosition = Vector2(Gdx.graphics.width / 2f - logoSize / 2,Gdx.graphics.height / 2f - logoSize / 2)
     private var start = TimeUtils.millis()
     private var deltaTime : Long = 0
+    private val font = BitmapFont()
 
     init {
         logo = Texture(Gdx.files.internal("graphics/logo_white.png"))
@@ -41,7 +46,8 @@ class LoadingScreen : Screen {
         percent = Interpolation.linear.apply(percent, RGBot.assetManager.progress, 0.1f)
         //println("Loaded: " + percent)
         batch.begin()
-        batch.draw(logo,logoPosition.x, logoPosition.y, logoSize, logoSize)
+        batch.draw(logo,logoPosition.x, logoPosition.y + font.capHeight, logoSize, logoSize)
+        font.draw(batch,"FantAsylum",logoPosition.x, logoPosition.y)
         batch.end()
         deltaTime = TimeUtils.timeSinceMillis(start)
         if (RGBot.assetManager.update() && deltaTime > 1000) {
