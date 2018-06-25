@@ -2,7 +2,6 @@ package io.github.fantasylum.rgbot.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
@@ -13,7 +12,6 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.TimeUtils
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.resid.ATLAS
-import com.badlogic.gdx.utils.TimeUtils.millis
 
 
 class LoadingScreen : Screen {

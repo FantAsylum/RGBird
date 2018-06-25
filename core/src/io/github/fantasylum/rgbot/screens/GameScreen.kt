@@ -3,8 +3,6 @@ package io.github.fantasylum.rgbot.screens
 import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -12,9 +10,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import io.github.fantasylum.rgbot.actors.*
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.math.MathUtils.random
-import com.badlogic.gdx.math.Vector2
-import io.github.fantasylum.rgbot.RGBot
-import io.github.fantasylum.rgbot.util.GameScreenAssets
 
 
 class GameScreen: ScreenAdapter() {
@@ -80,10 +75,11 @@ class GameScreen: ScreenAdapter() {
                 }
             })
             is FingerBot -> mainStage.addListener(object : InputListener() {
+                val input = Vector3(0f,0f,0f)
 
                 fun updatePoints() {
                     if (Gdx.input.isTouched) {
-                        val input = Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+                        input.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
                         camera.unproject(input)
                         bot.inputY = input.y
                     }
