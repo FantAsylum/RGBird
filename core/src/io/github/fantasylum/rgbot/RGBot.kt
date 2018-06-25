@@ -13,46 +13,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import io.github.fantasylum.rgbot.animations.Flash
 
 import io.github.fantasylum.rgbot.resid.ATLAS
-import io.github.fantasylum.rgbot.screens.GameScreen
+import io.github.fantasylum.rgbot.screens.LoadingScreen
 import io.github.fantasylum.rgbot.screens.MenuScreen
 import java.util.*
 
 object RGBot : ApplicationAdapter() {
-    private val ANIMATION_FRAME_DURATION = 0.1f
 
     private val screenStack = LinkedList<Screen>()
-    private val assetManager by lazy { AssetManager() }
-    private val atlas by lazy {
-        with (assetManager) {
-            load(ATLAS, TextureAtlas::class.java)
-            finishLoading()
-            get<TextureAtlas>(ATLAS)
-        }
-    }
-    val fireAnimation by lazy {
-        with (assetManager) {
-            load("effects/fire.p", ParticleEffect::class.java)
-            finishLoading()
-            get<ParticleEffect>("effects/fire.p")
-        }
-    }
-    val explosionAnimation by lazy {
-        with (assetManager) {
-            load("effects/explosion.p", ParticleEffect::class.java)
-            finishLoading()
-            get<ParticleEffect>("effects/explosion.p")
-        }
-    }
+    val assetManager = AssetManager()
     private val scanLineWidth = 1f
     private val rand = Random()
 
     override fun create() {
-        val animationScaleFactor = Gdx.graphics.width.toFloat() / 640f
-        fireAnimation.scaleEffect(animationScaleFactor)
-        pushScreen(MenuScreen())
+        pushScreen(LoadingScreen())
         Gdx.gl.glLineWidth(scanLineWidth)
     }
 
@@ -90,10 +65,6 @@ object RGBot : ApplicationAdapter() {
         assetManager.finishLoading()
         return assetManager.get(id)
     }
-
-    fun getAnimation(id: String) = Animation(ANIMATION_FRAME_DURATION, atlas.findRegions(id))
-
-    fun getTexture(id: String) = TextureRegion(atlas.findRegion(id))
 
     private fun drawTvScanLines() {
         val shapeRenderer = ShapeRenderer()

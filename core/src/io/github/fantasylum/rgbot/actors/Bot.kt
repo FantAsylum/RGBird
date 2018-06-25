@@ -12,17 +12,18 @@ import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
 import io.github.fantasylum.rgbot.screens.GameScreen
+import io.github.fantasylum.rgbot.util.GameScreenAssets
 
 abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
                    private val nextColor: (Color) -> Color = defaultNextColor): Actor() {
-    private val textures = mapOf(RED   to RGBot.getAnimation(Animations.BOT_RED),
-                                 GREEN to RGBot.getAnimation(Animations.BOT_GREEN),
-                                 BLUE  to RGBot.getAnimation(Animations.BOT_BLUE))
+    private val textures = mapOf(RED   to GameScreenAssets.getAnimation(Animations.BOT_RED),
+                                 GREEN to GameScreenAssets.getAnimation(Animations.BOT_GREEN),
+                                 BLUE  to GameScreenAssets.getAnimation(Animations.BOT_BLUE))
     var color = GREEN
         private set
 
-    private val fireEffect      = ParticleEffect(RGBot.fireAnimation)
-    private val explosionEffect = ParticleEffect(RGBot.explosionAnimation)
+    private val fireEffect      = ParticleEffect(GameScreenAssets.fireAnimation)
+    private val explosionEffect = ParticleEffect(GameScreenAssets.explosionAnimation)
     private var timeAlive       = 0f
     protected val velocity      = Vector2(velocity, 0f)
     protected var alive         = true

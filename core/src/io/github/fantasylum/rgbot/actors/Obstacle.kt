@@ -2,6 +2,7 @@ package io.github.fantasylum.rgbot.actors
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
@@ -11,6 +12,7 @@ import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.animations.Flash
 import io.github.fantasylum.rgbot.resid.Animations
 import io.github.fantasylum.rgbot.screens.GameScreen
+import io.github.fantasylum.rgbot.util.GameScreenAssets
 import io.github.fantasylum.rgbot.util.collides
 
 /**
@@ -31,14 +33,14 @@ class Obstacle(private val parts: List<Part>): Actor() {
     }
 
     private val textures = mapOf(
-            Color.RED to Flash(RGBot.getTexture(Animations.OBSTACLE_RED),2f,true, 0.5f),
-            Color.GREEN to Flash(RGBot.getTexture(Animations.OBSTACLE_GREEN),2f,true, 0.5f),
-            Color.BLUE to Flash(RGBot.getTexture(Animations.OBSTACLE_BLUE),2f,true, 0.5f))
+            Color.RED to Flash(GameScreenAssets.getTexture(Animations.OBSTACLE_RED),2f,true, 0.5f),
+            Color.GREEN to Flash(GameScreenAssets.getTexture(Animations.OBSTACLE_GREEN),2f,true, 0.5f),
+            Color.BLUE to Flash(GameScreenAssets.getTexture(Animations.OBSTACLE_BLUE),2f,true, 0.5f))
 
     private val blockTextures = mapOf(
-            Color.RED to RGBot.getAnimation(Animations.BLOCK_RED),
-            Color.GREEN to RGBot.getAnimation(Animations.BLOCK_GREEN),
-            Color.BLUE to RGBot.getAnimation(Animations.BLOCK_BLUE))
+            Color.RED to GameScreenAssets.getAnimation(Animations.BLOCK_RED),
+            Color.GREEN to GameScreenAssets.getAnimation(Animations.BLOCK_GREEN),
+            Color.BLUE to GameScreenAssets.getAnimation(Animations.BLOCK_BLUE))
 
     private var timeAlive = 0f
     private var delta = 0f
