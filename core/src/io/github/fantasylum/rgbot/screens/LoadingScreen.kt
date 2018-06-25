@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.TimeUtils
 import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.resid.ATLAS
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-
-
 
 
 class LoadingScreen : Screen {
@@ -71,7 +68,9 @@ class LoadingScreen : Screen {
     private fun setResourcesToLoad() {
         RGBot.assetManager.apply {
             load(ATLAS, TextureAtlas::class.java)
-            load("effects/fire.p", ParticleEffect::class.java)
+            load("effects/fire_red.p", ParticleEffect::class.java)
+            load("effects/fire_green.p", ParticleEffect::class.java)
+            load("effects/fire_blue.p", ParticleEffect::class.java)
             load("effects/explosion.p", ParticleEffect::class.java)
         }
     }

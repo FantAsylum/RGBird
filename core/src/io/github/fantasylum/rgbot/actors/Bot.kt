@@ -1,14 +1,10 @@
 package io.github.fantasylum.rgbot.actors
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import io.github.fantasylum.rgbot.Color
-
-import io.github.fantasylum.rgbot.RGBot
 import io.github.fantasylum.rgbot.Color.*
 import io.github.fantasylum.rgbot.resid.*
 import io.github.fantasylum.rgbot.screens.GameScreen
@@ -22,7 +18,10 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     var color = GREEN
         private set
 
-    private val fireEffect      = ParticleEffect(GameScreenAssets.fireAnimation)
+    private val fireEffect      = mapOf(RED to ParticleEffect(GameScreenAssets.fireAnimationRED),
+                                        GREEN to ParticleEffect(GameScreenAssets.fireAnimationGREEN),
+                                        BLUE to ParticleEffect(GameScreenAssets.fireAnimationBLUE))
+
     private val explosionEffect = ParticleEffect(GameScreenAssets.explosionAnimation)
     private var timeAlive       = 0f
     protected val velocity      = Vector2(velocity, 0f)
@@ -57,8 +56,8 @@ abstract class Bot(velocity: Float = DEFAULT_HORIZONTAL_VELOCITY,
     override fun draw(batch: Batch, parentAlpha: Float) {
         if (alive) {
             val texture = textures[color]!!.getKeyFrame(timeAlive, true)
-            fireEffect.setPosition(x + width / 2, y + height / 5)
-            fireEffect.draw(batch, delta)
+            fireEffect[color]!!.setPosition(x + width / 2, y + height / 5)
+            fireEffect[color]!!.draw(batch, delta)
             batch.draw(texture, x, y, width, height)
         } else {
             if (!explosionEffect.isComplete) {
