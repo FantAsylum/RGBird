@@ -16,3 +16,9 @@ object Animations {
     val BLOCK_GREEN = "portal_block_green"
     val BLOCK_BLUE  = "portal_block_blue"
 }
+
+object Picture {
+    val BACKGROUND_MOUNTAINS          = "bg_mountains"
+    val BACKGROUND_SUN                = "bg_sun"
+    val BACKGROUND_TILE_FLOOR_TEXTURE = "bg_tile_floor_mapping"
+}
