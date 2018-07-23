@@ -7,10 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
-import io.github.fantasylum.rgbot.actors.*
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.Rectangle
 
+
+import io.github.fantasylum.rgbot.actors.*
+import io.github.fantasylum.rgbot.background.CompositeBackground
+import io.github.fantasylum.rgbot.background.ParallaxPart
 
 class GameScreen: ScreenAdapter() {
     private val viewport  = FitViewport(WORLD_WIDTH, WORLD_HEIGHT)
@@ -24,6 +28,11 @@ class GameScreen: ScreenAdapter() {
     private var randomAngle = random.nextFloat() % 360f
 
     private val bot: Bot  = FingerBot()
+
+    private val background = CompositeBackground(
+            ParallaxPart(0.5f,
+                         Rectangle(0f, 0f, WORLD_WIDTH, WORLD_HEIGHT),
+                         "bg_mountains"));
 
     private var destroyAnimationPlayed = false
     private var gameOver = false
@@ -105,6 +114,8 @@ class GameScreen: ScreenAdapter() {
     override fun render(delta: Float) {
         mainStage.act(delta)
         obstacleManager.act()
+
+        background.draw(-bot.x)
         mainStage.draw()
         camera.position.x = bot.x
         camera.position.y = WORLD_HEIGHT / 2

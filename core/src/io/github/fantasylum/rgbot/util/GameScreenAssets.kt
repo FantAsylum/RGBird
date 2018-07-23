@@ -27,5 +27,5 @@ object GameScreenAssets {
 
     fun getAnimation(id: String) = Animation(ANIMATION_FRAME_DURATION, atlas.findRegions(id))
 
-    fun getTexture(id: String) = TextureRegion(atlas.findRegion(id))
+    fun getTexture(id: String) = atlas.findRegion(id)
 }

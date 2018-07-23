@@ -8,10 +8,10 @@ class CompositeBackground(vararg parts: Part) {
     val parts = GdxArray(parts)
     
     interface Part {
-	fun draw(xPos: Int)
+	fun draw(xPos: Float)
     }
 
-    fun draw(xPos: Int) {
+    fun draw(xPos: Float) {
 	for (part in parts) {
 	    part.draw(xPos)
 	}

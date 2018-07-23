@@ -1,7 +1,7 @@
 package io.github.fantasylum.rgbot.resid
 
 val UI_SKIN = "skins/neon-ui.json"
-val ATLAS   = "graphics/GameScreen.atlas"
+val ATLAS   = "graphics/atlas.atlas"
 
 object Animations {
     val BOT_GREEN = "bot_green"
