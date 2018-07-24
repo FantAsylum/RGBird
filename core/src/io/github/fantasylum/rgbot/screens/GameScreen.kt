@@ -20,25 +20,25 @@ class GameScreen: ScreenAdapter() {
     private val viewport  = FitViewport(WORLD_WIDTH, WORLD_HEIGHT)
     private val mainStage = Stage(viewport)
     private val camera    = mainStage.camera
-    //private val bot: Bot  = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
+    private val bot: Bot  = SimpleBot(Obstacle.DEFAULT_HEIGHT * 0.75f, Obstacle.DEFAULT_HEIGHT * 0.5f, Obstacle.DEFAULT_HEIGHT * 0.25f)
 
     private var elapsed = 0f
     private var duration = 0f
     private var radius = 0f
     private var randomAngle = random.nextFloat() % 360f
 
-    private val bot: Bot  = FingerBot()
+    // private val bot: Bot  = FingerBot()
 
     private val background = CompositeBackground(
-            ParallaxPart(0.5f,
-                         Rectangle(0f, 0f, WORLD_WIDTH, WORLD_HEIGHT),
+            ParallaxPart(1f,
+                         Rectangle(0f, 0f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()),
                          "bg_mountains"));
 
     private var destroyAnimationPlayed = false
     private var gameOver = false
     // TODO: add score
 
-    private val obstacleManager = ObstacleManager(mainStage.width, 150f, bot, mainStage)
+    private val obstacleManager = ObstacleManager(mainStage.width, 1500f, bot, mainStage)
 
     init {
         mainStage.addActor(bot)
@@ -115,15 +115,12 @@ class GameScreen: ScreenAdapter() {
         mainStage.act(delta)
         obstacleManager.act()
 
-        background.draw(-bot.x)
+        background.draw(bot.x)
         mainStage.draw()
         camera.position.x = bot.x
         camera.position.y = WORLD_HEIGHT / 2
         update(delta)
         // TODO: handle Game Over
-        if (gameOver) {
-            print("GAME OVER!")
-        }
     }
 
     companion object {
